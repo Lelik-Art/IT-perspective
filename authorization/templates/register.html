@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+	
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2rem;
+            max-width: 400px;
+            margin: auto;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        .error, .success {
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .error {
+            background-color: #fdd;
+            color: #900;
+        }
+        .success {
+            background-color: #dfd;
+            color: #060;
+        }
+		.alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+		}
+		.alert-success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+		}
+		.alert-error {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;}
+    </style>
+</head>
+<body>
+
+    <h2>Регистрация</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Имя" required>
+        <input type="email" name="email" placeholder="Электронная почта" required>
+        <input type="password" name="password" placeholder="Пароль" required>
+
+        <select name="role" required>
+            <option value="">Выберите роль</option>
+            <option value="Student">Студент</option>
+            <option value="Teacher">Преподаватель</option>
+        </select>
+
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+
+</body>
+</html>

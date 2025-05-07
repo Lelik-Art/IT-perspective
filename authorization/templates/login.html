@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Вход</title>
+</head>
+<body>
+    <h2>Вход</h2>
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: red;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        <label for="email">Email:</label>
+        <input type="text" name="email" required><br>
+        <label for="password">Пароль:</label>
+        <input type="password" name="password" required><br>
+        <button type="submit">Войти</button>
+    </form>
+
+    <p>
+        Нет аккаунта? <a href="{% url 'register' %}">Зарегистрируйтесь</a>
+    </p>
+    <p>
+        Забыли пароль? <a href="{% url 'forgive_password' %}">Восстановить пароль</a>
+    </p>
+</body>
+</html>
