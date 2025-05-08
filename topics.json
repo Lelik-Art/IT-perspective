@@ -1,0 +1,18 @@
+{
+  "course_id": 0,
+  "topics": [
+    {
+      "topic_id": 0,
+      "title": "Название темы",
+      "order": 1,
+      "test_id": 0,
+      "lessons": [
+        {
+          "lesson_id": 1,
+          "title": "Название занятия",
+          "order": 1
+        }
+      ]
+    }
+  ]
+}
