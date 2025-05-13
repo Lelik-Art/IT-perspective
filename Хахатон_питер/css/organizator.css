@@ -1,0 +1,185 @@
+
+        :root {
+            --primary-color: #1F69FF;
+            --secondary-color: #693EFE;
+            --background: #F8FAFF;
+            --text-dark: #2A2A2A;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Header */
+        .header {
+            background: var(--secondary-color);
+            padding: 1.5rem 0; /* Увеличенный отступ */
+            box-shadow: 0 4px 20px rgba(105, 62, 254, 0.1);
+        }
+        .nav-logo {
+            width: 300px; /* Увеличенный размер логотипа */
+            margin: 0 auto;
+            display: block;
+            transition: transform 0.3s ease; /* Анимация при наведении */
+        }
+        .nav-logo:hover {
+            transform: scale(1.05); /* Эффект при наведении */
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        /* Content Sections */
+        .section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Улучшенные стили для изображений */
+        .image-section {
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .responsive-image {
+            width: 100%;
+            max-width: 1000px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            transition: transform 0.3s ease;
+        }
+
+        .responsive-image:hover {
+            transform: scale(1.02);
+        }
+
+        .initiative-card {
+            background: var(--background);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .initiative-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .initiative-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-item {
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            box-shadow: 0 8px 25px rgba(31, 105, 255, 0.1);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            background: var(--primary-color);
+            color: var(--white);
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: #1553cc;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(31, 105, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 2rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .responsive-image {
+                max-width: 100%;
+                margin: 1rem 0;
+            }
+        }
+    

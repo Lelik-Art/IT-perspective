@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация пользователя</title>
+    <link rel="stylesheet" href="../css/registration.css">
+    <script defer src="../js/registration.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            color: #333;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Главная</a></li>
+            <li><a href="registr_add.html" class="nav-link">Новости</a></li>
+            <li><a href="#" class="nav-link">Курсы</a></li>
+        </ul>
+
+        <ul class="auth-links">
+            <li><a href="registration.html" class="auth-link">Регистрация</a></li>
+            <li><a href="login.html" class="auth-link">Авторизация</a></li>
+        </ul>
+    </nav>
+
+    <div class="content">
+        <div class="form-container">
+            <h2>Регистрация пользователя</h2>
+            <p class="description">Придумайте логин и пароль. Логином может выступать электронная почта.</p>
+            <div class="form-notifications"></div>
+            <form id="registrationForm">
+
+                <div class="form-group">
+                    <label for="username">Имя пользователя</label>
+                    <input type="text" id="username" placeholder="Ваше имя" required minlength="2">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="example@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Пароль (минимум 6 символов)</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" placeholder="Пароль" minlength="6" required>
+                        <span class="toggle-password" onclick="togglePassword('password')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="#666">
+                                <path d="M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zM12 17c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"/>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="password-wrapper">
+                        <input type="password" id="confirmPassword" placeholder="Пароль" minlength="6" required>
+                        <span class="toggle-password" onclick="togglePassword('confirmPassword')">
+                            <svg width="20" height="20" viewBox="0 0 30 30" fill="#666">
+                                <path d="M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zM12 17c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="password-match" id="passwordMessage"></div>
+                </div>
+
+                <div class="role-switch">
+                    <button type="button" class="role-btn active" data-role="student">Студент</button>
+                    <button type="button" class="role-btn" data-role="teacher">Преподаватель</button>
+                </div>
+
+                <button type="submit">Зарегистрировать аккаунт</button>
+            </form>
+        </div>
+    </div>
+    <script>document.addEventListener('DOMContentLoaded', () => {
+        const burger = document.querySelector('.burger-menu');
+        const navbar = document.querySelector('.navbar');
+    
+        burger.addEventListener('click', () => {
+            navbar.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+    
+        // Закрытие меню при клике вне области
+        document.addEventListener('click', (e) => {
+            if (!navbar.contains(e.target) && !burger.contains(e.target)) {
+                navbar.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+        });
+    });</script>
+    
+</body>
+</html>
