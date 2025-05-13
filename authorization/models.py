@@ -23,10 +23,10 @@ class User(AbstractBaseUser):
     role = models.CharField(max_length=20)
     code = models.CharField(max_length=6, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_confirmed = models.BooleanField(default=False)
+    avatar = models.CharField(default="avatars/default.png")
 
     objects = UserManager()
 
