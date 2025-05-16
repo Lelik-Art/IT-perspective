@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет преподавателя</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="teacher-page.css">
+</head>
+
+<body ng-app="myApp" ng-controller="myCtrl">
+    <div class="container">
+        <div class="sidebar">
+            <div class="profile">
+                <div class="avatar">
+                    <img ng-if="avatarUrl" ng-src="{{avatarUrl}}" alt="Avatar">
+                    <svg ng-if="!avatarUrl" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 482.9 482.9"
+                        style="enable-background:new 0 0 482.9 482.9;" xml:space="preserve" fill="#666">
+                        <g>
+                            <path
+                                d="M239.7,260.2c0.5,0,1,0,1.6,0c0.2,0,0.4,0,0.6,0c0.3,0,0.7,0,1,0c29.3-0.5,53-10.8,70.5-30.5 c38.5-43.4,32.1-117.8,31.4-124.9c-2.5-53.3-27.7-78.8-48.5-90.7C280.8,5.2,262.7,0.4,242.5,0h-0.7c-0.1,0-0.3,0-0.4,0h-0.6 c-11.1,0-32.9,1.8-53.8,13.7c-21,11.9-46.6,37.4-49.1,91.1c-0.7,7.1-7.1,81.5,31.4,124.9C186.7,249.4,210.4,259.7,239.7,260.2z M164.6,107.3c0-0.3,0.1-0.6,0.1-0.8c3.3-71.7,54.2-79.4,76-79.4h0.4c0.2,0,0.5,0,0.8,0c27,0.6,72.9,11.6,76,79.4 c0,0.3,0,0.6,0.1,0.8c0.1,0.7,7.1,68.7-24.7,104.5c-12.6,14.2-29.4,21.2-51.5,21.4c-0.2,0-0.3,0-0.5,0l0,0c-0.2,0-0.3,0-0.5,0 c-22-0.2-38.9-7.2-51.4-21.4C157.7,176.2,164.5,107.9,164.6,107.3z" />
+                            <path
+                                d="M446.8,383.6c0-0.1,0-0.2,0-0.3c0-0.8-0.1-1.6-0.1-2.5c-0.6-19.8-1.9-66.1-45.3-80.9c-0.3-0.1-0.7-0.2-1-0.3 c-45.1-11.5-82.6-37.5-83-37.8c-6.1-4.3-14.5-2.8-18.8,3.3c-4.3,6.1-2.8,14.5,3.3,18.8c1.7,1.2,41.5,28.9,91.3,41.7 c23.3,8.3,25.9,33.2,26.6,56c0,0.9,0,1.7,0.1,2.5c0.1,9-0.5,22.9-2.1,30.9c-16.2,9.2-79.7,41-176.3,41 c-96.2,0-160.1-31.9-176.4-41.1c-1.6-8-2.3-21.9-2.1-30.9c0-0.8,0.1-1.6,0.1-2.5c0,0.1,0,0.2,0,0.3c-0.7-22.8,3.3-47.7,26.6-56 c49.8-12.8,89.6-40.6,91.3-41.7c6.1-4.3,7.6-12.7,3.3-18.8c-4.3-6.1-12.7-7.6-18.8-3.3c-0.4,0.3-37.7,26.3-83,37.8 c-0.4,0.1-0.7,0.2-1,0.3c-43.4,14.9-44.7,61.2-45.3,80.9c0,0.9,0,1.7-0.1,2.5c0,0.1,0,0.2,0,0.3c-0.1,5.2-0.2,31.9,5.1,45.3 c1,2.6,2.8,4.8,5.2,6.3c3,2,74.9,47.8,195.2,47.8s192.2-45.9,195.2-47.8c2.3-1.5,4.2-3.7,5.2-6.3 C447,415.5,446.9,388.8,446.8,383.6z" />
+                        </g>
+                    </svg>
+                </div>
+                <h1>{{userName}}</h1>
+            </div>
+            <div class="course-title">Мои курсы</div>
+            <input type="text" ng-model="search" placeholder="Поиск курса" class="search-bar">
+            <div class="course-list">
+                <div class="course-item" ng-repeat="course in data.courses | filter:search">
+                    <div class="course-header" ng-click="toggleCourse(course)">
+                        <div class="expand-icon" ng-class="{expanded: course.isExpanded}">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 12L10 8L6 4" stroke="#333" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <span ng-class="{hidden: !course.isVisible}">{{course.name}}</span>
+                        <div class="course-actions">
+                            <button class="course-edit-btn" ng-click="editCourse(course); $event.stopPropagation()">
+                                <svg id="Capa_1" enable-background="new 0 0 511.984 511.984"
+                                    viewBox="0 0 511.984 511.984" xmlns="http://www.w3.org/2000/svg">
+                                    <g>
+                                        <path
+                                            d="m415 221.984c-8.284 0-15 6.716-15 15v220c0 13.785-11.215 25-25 25h-320c-13.785 0-25-11.215-25-25v-320c0-13.785 11.215-25 25-25h220c8.284 0 15-6.716 15-15s-6.716-15-15-15h-220c-30.327 0-55 24.673-55 55v320c0 30.327 24.673 55 55 55h320c30.327 0 55-24.673 55-55v-220c0-8.284-6.716-15-15-15z" />
+                                        <path
+                                            d="m501.749 38.52-28.285-28.285c-13.645-13.646-35.849-13.646-49.497 0l-226.273 226.274c-2.094 2.094-3.521 4.761-4.103 7.665l-14.143 70.711c-.983 4.918.556 10.002 4.103 13.548 2.841 2.841 6.668 4.394 10.606 4.394.979 0 1.963-.096 2.941-.291l70.711-14.143c2.904-.581 5.571-2.009 7.665-4.103l226.275-226.273s.001 0 .001-.001c13.645-13.645 13.645-35.849-.001-49.496zm-244.276 251.346-44.194 8.84 8.84-44.194 184.17-184.173 35.356 35.356zm223.063-223.062-17.678 17.678-35.356-35.356 17.677-17.677c1.95-1.95 5.122-1.951 7.072-.001l28.284 28.285c1.951 1.949 1.951 5.122.001 7.071z" />
+                                    </g>
+                                </svg>
+                            </button>
+                            <button class="course-delete-btn" ng-click="deleteCourse(course); $event.stopPropagation()">
+                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 375 375"
+                                    style="enable-background:new 0 0 375 375;" xml:space="preserve">
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M328.35,37.3h-103.3V18.8c0-10.4-8.4-18.8-18.8-18.8h-37.6c-10.4,0-18.8,8.4-18.8,18.8v18.5H46.55 c-15.5,0-28.1,12.6-28.1,28.2s12.6,28.2,28.2,28.2h281.7c15.6,0,28.2-12.6,28.2-28.2S343.85,37.3,328.35,37.3z" />
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M55.95,131.6v224.6c0,10.3,8.5,18.8,18.8,18.8h225.8c10.3,0,18.8-8.5,18.8-18.8V131.6H55.95z M131.35,337.8h-37.6v-169 h37.6V337.8z M206.45,337.8h-37.6v-169h37.6V337.8z M281.45,337.8h-37.6v-169h37.6V337.8z" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="course-content" ng-show="course.isExpanded">
+                        <button class="action-btn" ng-click="togglePublish(course)"
+                            ng-class="{'unpublished': !course.isPublished}">
+                            {{course.isPublished ? 'Снять с публикации' : 'Опубликовать'}}
+                        </button>
+                        <button class="action-btn edit-btn" ng-click="startEditing(course)"
+                            ng-if="!course.isEditing">Редактировать</button>
+                        <div ng-if="course.isEditing">
+                            <button class="action-btn save-btn" ng-click="saveCourse(course)">Сохранить</button>
+                            <button class="action-btn cancel-btn" ng-click="cancelEditing(course)">Отменить</button>
+                        </div>
+
+                        <br><br>
+                        <!-- Sidebar Section Items -->
+                        <div class="section-item" ng-repeat="section in course.sections">
+                            <input type="text" class="section-title-input" ng-model="section.title"
+                                placeholder="Название раздела">
+                            <!-- Separator after section item in sidebar -->
+                            <div class="section-separator" ng-if="!$last"></div>
+                        </div>
+                        <!-- Statistics Item -->
+                        <div class="statistics-item">
+                            <div class="course-header" ng-click="toggleCourseStatistics(course)">
+                                <div class="expand-icon" ng-class="{expanded: course.statistics.isExpanded}">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6 12L10 8L6 4" stroke="#333" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+                                <span>Статистика</span>
+                                <button class="scroll-top-btn" ng-click="scrollToTop()">
+                                    <svg clip-rule="evenodd" fill-rule="evenodd" image-rendering="optimizeQuality"
+                                        shape-rendering="geometricPrecision" text-rendering="geometricPrecision"
+                                        viewBox="0 0 28444 28444" xmlns="http://www.w3.org/2000/svg" width="16"
+                                        height="16">
+                                        <g id="Layer_x0020_1">
+                                            <path
+                                                d="m26335 7198c141-11 286 37 393 145 110 110 158 257 144 400v8036c0 275-223 498-498 498s-498-223-498-498v-6878l-8383 8383c-195 195-512 195-707 0l-5273-5273-9090 9090c-195 195-512 195-707 0s-195-512 0-707l9444-9444c195-195 512-195 707 0l5273 5273 8030-8030h-6879c-275 0-498-223-498-498s223-498 498-498h8044z"
+                                                fill-rule="nonzero" />
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="course-content" ng-show="course.statistics.isExpanded">
+                                <div class="statistics-content">
+                                    <p>Количество студентов: {{course.stats.totalStudents}}</p>
+                                    <p>Процент завершения: {{course.stats.completionRate}}%</p>
+                                    <p>Количество выданных сертификатов: {{course.stats.certificatesIssued}}</p>
+                                    <p>Количество незавершенных курсов: {{course.stats.incompleteCourses}}</p>
+                                    <p>Средний бал: {{course.stats.averageScore}}</p>
+                                    <button class="action-btn" ng-click="selectCourse(course); selectTab('publish')">
+                                        Посмотреть список студентов
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Separator after statistics item -->
+                            <div class="section-separator" ng-if="!$last"></div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <button class="add-course-btn" ng-click="openAddCourseModal()">Добавить курс</button>
+        </div>
+
+        <div class="main-content">
+            <div class="course-details" ng-if="selectedCourse && currentTab !== 'statistics'">
+                <h2>{{selectedCourse.name}}</h2>
+
+                <div ng-if="currentTab === 'edit'">
+                    <!-- Main content Sections -->
+                    <div class="section" ng-repeat="section in selectedCourse.sections">
+                        <div class="section-header">
+                            <input type="text" class="section-title-input" ng-model="section.title"
+                                placeholder="Название раздела" ng-disabled="!selectedCourse.isEditing">
+                        </div>
+                        <div ng-repeat="element in section.elements track by $index">
+                            <!-- Lesson -->
+                            <div class="element-item lesson" ng-if="element.type === 'lesson'">
+                                <div class="element-content">
+                                    <input type="text" ng-model="element.title" placeholder="Название урока"
+                                        ng-disabled="!selectedCourse.isEditing">
+                                    <textarea ng-model="element.description" placeholder="Описание урока"
+                                        ng-disabled="!selectedCourse.isEditing"></textarea>
+                                </div>
+                                <button class="delete-element-btn" ng-click="deleteElement(section, $index)"
+                                    ng-if="selectedCourse.isEditing">
+                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 375 375"
+                                        style="enable-background:new 0 0 375 375;" xml:space="preserve">
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="M328.35,37.3h-103.3V18.8c0-10.4-8.4-18.8-18.8-18.8h-37.6c-10.4,0-18.8,8.4-18.8,18.8v18.5H46.55 c-15.5,0-28.1,12.6-28.1,28.2s12.6,28.2,28.2,28.2h281.7c15.6,0,28.2-12.6,28.2-28.2S343.85,37.3,328.35,37.3z" />
+                                            </g>
+                                        </g>
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="M55.95,131.6v224.6c0,10.3,8.5,18.8,18.8,18.8h225.8c10.3,0,18.8-8.5,18.8-18.8V131.6H55.95z M131.35,337.8h-37.6v-169 h37.6V337.8z M206.45,337.8h-37.6v-169h37.6V337.8z M281.45,337.8h-37.6v-169h37.6V337.8z" />
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+                            <!-- Test -->
+                            <div class="element-item test" ng-if="element.type === 'test'">
+                                <div class="element-content">
+                                    <!-- Название теста -->
+                                    <div ng-if="!selectedCourse.isEditing" class="test-title">{{element.name}}</div>
+                                    <input type="text" ng-if="selectedCourse.isEditing" ng-model="element.name"
+                                        placeholder="Название теста">
+
+                                    <!-- Вопросы теста -->
+                                    <div class="question-item"
+                                        ng-repeat="question in element.questions track by $index">
+                                        <!-- Тип вопроса (только в режиме редактирования) -->
+                                        <div ng-if="selectedCourse.isEditing" class="question-type">
+                                            Тип вопроса:
+                                            <select ng-model="question.type" ng-change="changeQuestionType(question)"
+                                                class="question-type-select">
+                                                <option value="single">Одиночный выбор</option>
+                                                <option value="multiple">Множественный выбор</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Текст вопроса -->
+                                        <div ng-if="!selectedCourse.isEditing" class="question-text">{{question.text}}
+                                        </div>
+                                        <input type="text" ng-if="selectedCourse.isEditing" ng-model="question.text"
+                                            placeholder="Текст вопроса">
+
+                                        <!-- Варианты ответа для вопросов с выбором -->
+                                        <div ng-if="question.type === 'single' || question.type === 'multiple'">
+                                            <div class="option-item"
+                                                ng-repeat="option in question.options track by $index">
+                                                <!-- В режиме просмотра -->
+                                                <div ng-if="!selectedCourse.isEditing" class="option-text">
+                                                    {{option.text}}
+                                                    <span
+                                                        ng-if="option.isCorrect || (question.type === 'single' && question.correctOption === $index)"
+                                                        class="correct-mark">(Правильный)</span>
+                                                </div>
+                                                <!-- В режиме редактирования -->
+                                                <div ng-if="selectedCourse.isEditing" class="option-edit">
+                                                    <input type="text" ng-model="option.text"
+                                                        placeholder="Текст варианта">
+                                                    <input type="checkbox" ng-model="option.isCorrect"
+                                                        ng-if="question.type === 'multiple'">
+                                                    <input type="radio" ng-model="question.correctOption"
+                                                        ng-value="$index" ng-if="question.type === 'single'"
+                                                        name="question-{{element.name}}-{{question.text}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="delete-element-btn" ng-click="deleteElement(section, $index)"
+                                    ng-if="selectedCourse.isEditing">
+                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 375 375"
+                                        style="enable-background:new 0 0 375 375;" xml:space="preserve">
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="M328.35,37.3h-103.3V18.8c0-10.4-8.4-18.8-18.8-18.8h-37.6c-10.4,0-18.8,8.4-18.8,18.8v18.5H46.55 c-15.5,0-28.1,12.6-28.1,28.2s12.6,28.2,28.2,28.2h281.7c15.6,0,28.2-12.6,28.2-28.2S343.85,37.3,328.35,37.3z" />
+                                            </g>
+                                        </g>
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="M55.95,131.6v224.6c0,10.3,8.5,18.8,18.8,18.8h225.8c10.3,0,18.8-8.5,18.8-18.8V131.6H55.95z M131.35,337.8h-37.6v-169 h37.6V337.8z M206.45,337.8h-37.6v-169h37.6V337.8z M281.45,337.8h-37.6v-169h37.6V337.8z" />
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+                            <!-- Media -->
+                            <div class="element-item media-section" ng-if="element.type === 'media'">
+                                <div class="element-content">
+                                    <h4>Изображение</h4>
+                                    <div class="media-grid">
+                                        <div class="media-item">
+                                            <img ng-src="{{element.url}}" alt="Media">
+                                        </div>
+                                    </div>
+                                    <input type="text" ng-model="element.url" placeholder="URL изображения"
+                                        ng-disabled="!selectedCourse.isEditing">
+                                </div>
+                                <button class="delete-element-btn" ng-click="deleteElement(section, $index)"
+                                    ng-if="selectedCourse.isEditing">
+                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 375 375"
+                                        style="enable-background:new 0 0 375 375;" xml:space="preserve">
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="M328.35,37.3h-103.3V18.8c0-10.4-8.4-18.8-18.8-18.8h-37.6c-10.4,0-18.8,8.4-18.8,18.8v18.5H46.55 c-15.5,0-28.1,12.6-28.1,28.2s12.6,28.2,28.2,28.2h281.7c15.6,0,28.2-12.6,28.2-28.2S343.85,37.3,328.35,37.3z" />
+                                            </g>
+                                        </g>
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="M55.95,131.6v224.6c0,10.3,8.5,18.8,18.8,18.8h225.8c10.3,0,18.8-8.5,18.8-18.8V131.6H55.95z M131.35,337.8h-37.6v-169 h37.6V337.8z M206.45,337.8h-37.6v-169h37.6V337.8z M281.45,337.8h-37.6v-169h37.6V337.8z" />
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+                            <!-- File -->
+                            <div class="element-item files-section" ng-if="element.type === 'file'">
+                                <div class="element-content">
+                                    <h4>PDF документ</h4>
+                                    <div class="file-item">
+                                        <span><a href="{{element.url}}" target="_blank">{{element.url}}</a></span>
+                                    </div>
+                                    <input type="text" ng-model="element.url" placeholder="URL документа"
+                                        ng-disabled="!selectedCourse.isEditing">
+                                </div>
+                                <button class="delete-element-btn" ng-click="deleteElement(section, $index)"
+                                    ng-if="selectedCourse.isEditing">
+                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 375 375"
+                                        style="enable-background:new 0 0 375 375;" xml:space="preserve">
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="M328.35,37.3h-103.3V18.8c0-10.4-8.4-18.8-18.8-18.8h-37.6c-10.4,0-18.8,8.4-18.8,18.8v18.5H46.55 c-15.5,0-28.1,12.6-28.1,28.2s12.6,28.2,28.2,28.2h281.7c15.6,0,28.2-12.6,28.2-28.2S343.85,37.3,328.35,37.3z" />
+                                            </g>
+                                        </g>
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="M55.95,131.6v224.6c0,10.3,8.5,18.8,18.8,18.8h225.8c10.3,0,18.8-8.5,18.8-18.8V131.6H55.95z M131.35,337.8h-37.6v-169 h37.6V337.8z M206.45,337.8h-37.6v-169h37.6V337.8z M281.45,337.8h-37.6v-169h37.6V337.8z" />
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+                            <!-- Video -->
+                            <div class="element-item video-section" ng-if="element.type === 'video'">
+                                <div class="element-content">
+                                    <h4>Видео</h4>
+                                    <div class="video-item">
+                                        <img ng-src="{{element.thumbnail}}" alt="Video">
+                                        <button class="play-btn">
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5 3L15 10L5 17V3Z" fill="#fff" />
+                                            </svg>
+                                        </button>
+                                        <span class="duration">{{element.duration}}</span>
+                                    </div>
+                                    <input type="text" ng-model="element.thumbnail" placeholder="URL превью видео"
+                                        ng-disabled="!selectedCourse.isEditing">
+                                    <input type="text" ng-model="element.url" placeholder="URL видео"
+                                        ng-disabled="!selectedCourse.isEditing">
+                                </div>
+                                <button class="delete-element-btn" ng-click="deleteElement(section, $index)"
+                                    ng-if="selectedCourse.isEditing">
+                                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 375 375"
+                                        style="enable-background:new 0 0 375 375;" xml:space="preserve">
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="M328.35,37.3h-103.3V18.8c0-10.4-8.4-18.8-18.8-18.8h-37.6c-10.4,0-18.8,8.4-18.8,18.8v18.5H46.55 c-15.5,0-28.1,12.6-28.1,28.2s12.6,28.2,28.2,28.2h281.7c15.6,0,28.2-12.6,28.2-28.2S343.85,37.3,328.35,37.3z" />
+                                            </g>
+                                        </g>
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="M55.95,131.6v224.6c0,10.3,8.5,18.8,18.8,18.8h225.8c10.3,0,18.8-8.5,18.8-18.8V131.6H55.95z M131.35,337.8h-37.6v-169 h37.6V337.8z M206.45,337.8h-37.6v-169h37.6V337.8z M281.45,337.8h-37.6v-169h37.6V337.8z" />
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+                            <!-- Add element button after each element -->
+                            <div class="add-element-container" ng-if="selectedCourse.isEditing">
+                                <button class="add-element-btn" ng-click="openAddElementModal(section, $index + 1)">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 5V19M5 12H19" stroke="#007bff" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Final add button after all elements (for empty sections) -->
+                        <div class="add-element-container"
+                            ng-if="section.elements.length === 0 && selectedCourse.isEditing">
+                            <button class="add-element-btn" ng-click="openAddElementModal(section, 0)">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 5V19M5 12H19" stroke="#007bff" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                        <!-- Separator after section in main content -->
+                        <div class="section-separator" ng-if="!$last"></div>
+                    </div>
+                </div>
+                <div ng-if="currentTab === 'publish'">
+                    <div class="student-list">
+                        <h3>Список студентов</h3>
+                        <input type="text" ng-model="studentSearch" placeholder="Поиск студента" class="search-bar">
+                        <table class="student-table">
+                            <thead>
+                                <tr>
+                                    <th>Имя Фамилия</th>
+                                    <th>Дата начала</th>
+                                    <th>Дата сдачи</th>
+                                    <th>Пройденные уроки</th>
+                                    <th>Статус</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="student in data.students | filter:studentSearch">
+                                    <td>{{student.name}}</td>
+                                    <td>{{student.startDate}}</td>
+                                    <td>{{student.endDate}}</td>
+                                    <td>{{student.lessonsCompleted}}</td>
+                                    <td class="status-passed">{{student.status}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="!selectedCourse && currentTab !== 'statistics'" class="main-content-placeholder">
+                <h2>Выберите курс</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for adding or editing a course -->
+    <div class="modal" ng-show="showAddCourseModal || showEditCourseModal">
+        <div class="modal-content">
+            <h3>{{showEditCourseModal ? 'Редактировать курс' : 'Добавить новый курс'}}</h3>
+            <input type="text" ng-model="newCourseName" placeholder="Введите название курса" class="modal-input">
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn" ng-click="closeCourseModal()">Отмена</button>
+                <button class="modal-btn confirm-btn" ng-click="confirmCourse()"
+                    ng-disabled="!newCourseName">{{showEditCourseModal ? 'Сохранить' : 'Добавить'}}</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for selecting element type -->
+    <div class="modal" ng-show="showAddElementModal">
+        <div class="modal-content">
+            <h3>Добавить элемент</h3>
+            <div class="element-options">
+                <button class="element-option-btn" ng-click="addElement('lesson')">Текст</button>
+                <button class="element-option-btn" ng-click="addElement('media')">Изображение</button>
+                <button class="element-option-btn" ng-click="addElement('file')">PDF документ</button>
+                <button class="element-option-btn" ng-click="addElement('video')">Видео</button>
+                <button class="element-option-btn" ng-click="addElement('test')">Тест</button>
+                <button class="element-option-btn" ng-click="addSection(); closeAddElementModal()">Новый раздел</button>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn" ng-click="closeAddElementModal()">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope, $timeout) {
+            $scope.userName = 'Иван Иванов';
+            $scope.avatarUrl = null;
+            $scope.currentTab = 'edit';
+            $scope.showAddCourseModal = false;
+            $scope.showEditCourseModal = false;
+            $scope.showAddElementModal = false;
+            $scope.newCourseName = '';
+            $scope.editingCourse = null;
+            $scope.currentSection = null;
+            $scope.insertIndex = 0;
+
+            $scope.data = {
+                courses: [
+                    {
+                        id: 1,
+                        name: 'Курс название1',
+                        isVisible: true,
+                        isPublished: true,
+                        selected: true,
+                        isExpanded: false,
+                        statistics: { isExpanded: false },
+                        stats: {
+                            totalStudents: 25,
+                            completionRate: 80,
+                            certificatesIssued: 20,
+                            incompleteCourses: 5,
+                            averageScore: 85
+                        },
+                        sections: [
+                            {
+                                id: 1,
+                                title: 'Основы курса',
+                                description: 'Здесь будет текст темы, уточняющий какие основные инструкции к классу их настройка.',
+                                elements: [
+                                    {
+                                        type: 'lesson',
+                                        title: 'Название темы №1',
+                                        description: 'Здесь будет текст темы, уточняющий какие основные инструкции к классу их настройка.'
+                                    },
+                                    { type: 'lesson', title: 'Текст занятия 1', description: '' },
+                                    { type: 'lesson', title: 'Текст занятия 2', description: '' },
+                                    {
+                                        type: 'test',
+                                        name: 'Вопрос теста 1',
+                                        questions: [
+                                            {
+                                                type: 'single',
+                                                text: 'Какой город является столицей Франции?',
+                                                options: [
+                                                    { text: 'Париж', isCorrect: true },
+                                                    { text: 'Лондон', isCorrect: false },
+                                                    { text: 'Берлин', isCorrect: false }
+                                                ],
+                                                correctOption: 0
+                                            },
+                                            {
+                                                type: 'multiple',
+                                                text: 'Какие из следующих языков являются объектно-ориентированными?',
+                                                options: [
+                                                    { text: 'Java', isCorrect: true },
+                                                    { text: 'C', isCorrect: false },
+                                                    { text: 'Python', isCorrect: true }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    { type: 'media', url: 'https://via.placeholder.com/120' },
+                                    { type: 'media', url: 'https://via.placeholder.com/120' },
+                                    { type: 'media', url: 'https://via.placeholder.com/120' },
+                                    { type: 'file', url: 'https://example.com/file-name.pdf' },
+                                    { type: 'file', url: 'https://example.com/file-name.pdf' },
+                                    { type: 'file', url: 'https://example.com/file-name.pdf' },
+                                    {
+                                        type: 'video',
+                                        thumbnail: 'https://via.placeholder.com/240x120',
+                                        url: 'https://example.com/video.mp4',
+                                        duration: '00:05:00'
+                                    }
+                                ]
+                            },
+                            { id: 2, title: 'Продвинутый уровень', description: '', elements: [] }
+                        ]
+                    },
+                    {
+                        id: 2,
+                        name: 'Курс название2',
+                        isVisible: true,
+                        isPublished: false,
+                        selected: false,
+                        isExpanded: false,
+                        statistics: { isExpanded: false },
+                        stats: {
+                            totalStudents: 15,
+                            completionRate: 60,
+                            certificatesIssued: 10,
+                            incompleteCourses: 5,
+                            averageScore: 75
+                        },
+                        sections: [
+                            { id: 1, title: 'Введение', description: '', elements: [] },
+                            { id: 2, title: 'Основная часть', description: '', elements: [] }
+                        ]
+                    },
+                    {
+                        id: 3,
+                        name: 'Курс название3',
+                        isVisible: true,
+                        isPublished: true,
+                        selected: false,
+                        isExpanded: false,
+                        statistics: { isExpanded: false },
+                        stats: {
+                            totalStudents: 30,
+                            completionRate: 90,
+                            certificatesIssued: 25,
+                            incompleteCourses: 5,
+                            averageScore: 90
+                        },
+                        sections: [
+                            { id: 1, title: 'Начало', description: '', elements: [] }
+                        ]
+                    }
+                ],
+                students: [
+                    {
+                        name: 'Иван Фамилия 1',
+                        startDate: '2 дня назад',
+                        endDate: '5 дней назад',
+                        lessonsCompleted: '52',
+                        status: 'Пройдено'
+                    },
+                    {
+                        name: 'Иван Фамилия 2',
+                        startDate: '4 дня назад',
+                        endDate: '5 дней назад',
+                        lessonsCompleted: '22',
+                        status: 'Пройдено'
+                    },
+                    {
+                        name: 'Иван Фамилия 3',
+                        startDate: '5 дней назад',
+                        endDate: '5 дней назад',
+                        lessonsCompleted: '82',
+                        status: 'Пройдено'
+                    },
+                    {
+                        name: 'Иван Фамилия 4',
+                        startDate: '8 дней назад',
+                        endDate: '5 дней назад',
+                        lessonsCompleted: '33',
+                        status: 'Пройдено'
+                    },
+                    {
+                        name: 'Иван Фамилия 5',
+                        startDate: '12 дней назад',
+                        endDate: '5 дней назад',
+                        lessonsCompleted: '66',
+                        status: 'Пройдено'
+                    },
+                    {
+                        name: 'Иван Фамилия 6',
+                        startDate: '25 дней назад',
+                        endDate: '5 дней назад',
+                        lessonsCompleted: '70',
+                        status: 'Пройдено'
+                    },
+                    {
+                        name: 'Иван Фамилия 7',
+                        startDate: '1 месяц назад',
+                        endDate: '5 дней назад',
+                        lessonsCompleted: '77',
+                        status: 'Пройдено'
+                    },
+                    {
+                        name: 'Иван Фамилия 8',
+                        startDate: '1 месяц назад',
+                        endDate: '5 дней назад',
+                        lessonsCompleted: '50',
+                        status: 'Пройдено'
+                    },
+                    {
+                        name: 'Иван Фамилия 9',
+                        startDate: '10 дней назад',
+                        endDate: '5 дней назад',
+                        lessonsCompleted: '3',
+                        status: 'Пройдено'
+                    }
+                ]
+            };
+
+            /*function loadInitialData() {
+                console.log("Attempting to load data from server...");
+                $http.get('http://127.0.0.1:8000/teacher_dashboard_data') 
+                    .then(function (response) {
+                        console.log("Data received from server:", response.data);
+
+                        if (response.data && response.data.teacherInfo) {
+                            $scope.userName = response.data.teacherInfo.userName;
+                            $scope.avatarUrl = response.data.teacherInfo.avatarUrl;
+                        }
+
+                        if (response.data && response.data.courses) {
+                            $scope.data.courses = response.data.courses.map(function (course) {
+                                return {
+                                    id: course.id,
+                                    name: course.name,
+                                    isVisible: course.isVisible !== undefined ? course.isVisible : true,
+                                    isPublished: course.isPublished !== undefined ? course.isPublished : false,
+                                    selected: false,
+                                    isExpanded: false,
+                                    statistics: course.statistics || { isExpanded: false },
+                                    stats: course.stats || {
+                                        totalStudents: 0,
+                                        completionRate: 0,
+                                        certificatesIssued: 0,
+                                        incompleteCourses: 0,
+                                        averageScore: 0
+                                    },
+                                    sections: (course.sections || []).map(function (section) {
+                                        return {
+                                            id: section.id,
+                                            title: section.title,
+                                            description: section.description || '',
+                                            elements: section.elements || []
+                                        };
+                                    })
+                                };
+                            });
+                        } else {
+                            $scope.data.courses = [];
+                        }
+
+                        if (response.data && response.data.students) {
+                            $scope.data.students = response.data.students;
+                        } else {
+                            $scope.data.students = [];
+                        }
+
+                        if ($scope.data.courses.length > 0) {
+                            $scope.data.courses[0].selected = true;
+                            $scope.selectedCourse = $scope.data.courses[0];
+                        } else {
+                            $scope.selectedCourse = null;
+                        }
+                        console.log("Processed scope data:", $scope.data);
+
+                    }, function (error) {
+                        console.error('Error loading data from server:', error);
+                        alert('Не удалось загрузить данные с сервера. Используются данные по умолчанию.');
+                    });
+            }*/
+
+            // loadInitialData();
+
+            // Initialize the first course as selected
+            $scope.data.courses.forEach(c => c.selected = false);
+            if ($scope.data.courses.length > 0) {
+                $scope.data.courses[0].selected = true;
+                $scope.selectedCourse = $scope.data.courses[0];
+            } else {
+                $scope.selectedCourse = null;
+            }
+
+            $scope.search = '';
+            $scope.studentSearch = '';
+
+            $scope.toggleCourse = function (course) {
+                course.isExpanded = !course.isExpanded;
+                if (course.isExpanded) {
+                    $scope.data.courses.forEach(c => {
+                        if (c.id !== course.id) {
+                            c.isExpanded = false;
+                            c.statistics.isExpanded = false;
+                        }
+                    });
+                    $scope.selectCourse(course);
+                } else {
+                    if ($scope.selectedCourse === course) {
+                        $scope.selectedCourse = null;
+                    }
+                    course.statistics.isExpanded = false;
+                }
+            };
+
+            $scope.toggleCourseStatistics = function (course) {
+                course.statistics.isExpanded = !course.statistics.isExpanded;
+            };
+
+            $scope.togglePublish = function (course) {
+                course.isPublished = !course.isPublished;
+            };
+
+            $scope.selectCourse = function (course) {
+                if ($scope.currentTab === 'statistics' || $scope.selectedCourse !== course) {
+                    $scope.data.courses.forEach(c => c.selected = false);
+                    course.selected = true;
+                    $scope.selectedCourse = course;
+                    $scope.currentTab = 'edit';
+                }
+                if ($scope.selectedCourse === course && $scope.currentTab !== 'edit') {
+                    $scope.currentTab = 'edit';
+                }
+            };
+
+            $scope.selectTab = function (tab) {
+                $scope.currentTab = tab;
+            };
+
+            $scope.openAddCourseModal = function () {
+                $scope.newCourseName = '';
+                $scope.showAddCourseModal = true;
+            };
+
+            $scope.editCourse = function (course) {
+                $scope.editingCourse = course;
+                $scope.newCourseName = course.name;
+                $scope.showEditCourseModal = true;
+            };
+
+            $scope.deleteCourse = function (course) {
+                if (confirm('Вы уверены, что хотите удалить курс "' + course.name + '"?')) {
+                    var index = $scope.data.courses.indexOf(course);
+                    if (index !== -1) {
+                        $scope.data.courses.splice(index, 1);
+                        if ($scope.selectedCourse === course) {
+                            $scope.selectedCourse = $scope.data.courses[0] || null;
+                            if ($scope.selectedCourse) {
+                                $scope.selectCourse($scope.selectedCourse);
+                            } else {
+                                $scope.currentTab = 'edit';
+                            }
+                        }
+                    }
+                }
+            };
+
+            $scope.closeCourseModal = function () {
+                $scope.showAddCourseModal = false;
+                $scope.showEditCourseModal = false;
+                $scope.newCourseName = '';
+                $scope.editingCourse = null;
+            };
+
+            $scope.confirmCourse = function () {
+                if ($scope.newCourseName) {
+                    if ($scope.showEditCourseModal && $scope.editingCourse) {
+                        $scope.editingCourse.name = $scope.newCourseName;
+                    } else {
+                        var newCourse = {
+                            id: $scope.data.courses.length > 0 ? $scope.data.courses[$scope.data.courses.length - 1].id + 1 : 1,
+                            name: $scope.newCourseName,
+                            isVisible: true,
+                            isPublished: false,
+                            selected: false,
+                            isExpanded: false,
+                            statistics: { isExpanded: false },
+                            stats: {
+                                totalStudents: 0,
+                                completionRate: 0,
+                                certificatesIssued: 0,
+                                incompleteCourses: 0,
+                                averageScore: 0
+                            },
+                            sections: [{ id: 1, title: 'Новый раздел', description: '', elements: [] }]
+                        };
+                        $scope.data.courses.push(newCourse);
+                        $scope.selectCourse(newCourse);
+                    }
+                    $scope.closeCourseModal();
+                }
+            };
+
+            $scope.openAddElementModal = function (section, index) {
+                if ($scope.selectedCourse && $scope.selectedCourse.isEditing) {
+                    $scope.currentSection = section;
+                    $scope.insertIndex = index;
+                    $scope.showAddElementModal = true;
+                } else {
+                    alert("Пожалуйста, сначала нажмите 'Редактировать' для курса.");
+                }
+            };
+
+            $scope.closeAddElementModal = function () {
+                $scope.showAddElementModal = false;
+                $scope.currentSection = null;
+                $scope.insertIndex = 0;
+            };
+
+            $scope.addElement = function (type) {
+                var newElement;
+                switch (type) {
+                    case 'lesson':
+                        newElement = { type: 'lesson', title: 'Новый урок', description: '' };
+                        break;
+                    case 'media':
+                        newElement = { type: 'media', url: 'https://via.placeholder.com/120' };
+                        break;
+                    case 'file':
+                        newElement = { type: 'file', url: 'https://example.com/file-name.pdf' };
+                        break;
+                    case 'video':
+                        newElement = {
+                            type: 'video',
+                            thumbnail: 'https://via.placeholder.com/240x120',
+                            url: 'https://example.com/video.mp4',
+                            duration: '00:05:00'
+                        };
+                        break;
+                    case 'test':
+                        newElement = { type: 'test', name: 'Новый тест', questions: [] };
+                        break;
+                    default:
+                        console.error('Unknown element type:', type);
+                        $scope.closeAddElementModal();
+                        return;
+                }
+
+                if ($scope.currentSection && $scope.currentSection.elements) {
+                    $scope.currentSection.elements.splice($scope.insertIndex, 0, newElement);
+                } else {
+                    console.error('Cannot add element: currentSection or elements array is null/undefined');
+                }
+
+                $scope.closeAddElementModal();
+            };
+
+            $scope.addSection = function () {
+                if (!$scope.selectedCourse || !$scope.selectedCourse.isEditing) {
+                    alert("Пожалуйста, сначала выберите курс и нажмите 'Редактировать'.");
+                    return;
+                }
+                var newSection = {
+                    id: $scope.selectedCourse.sections.length > 0 ? $scope.selectedCourse.sections[$scope.selectedCourse.sections.length - 1].id + 1 : 1,
+                    title: 'Новый раздел',
+                    description: '',
+                    elements: []
+                };
+                $scope.selectedCourse.sections.push(newSection);
+                $scope.closeAddElementModal();
+            };
+
+            $scope.deleteElement = function (section, index) {
+                if (!$scope.selectedCourse || !$scope.selectedCourse.isEditing) {
+                    alert("Пожалуйста, сначала нажмите 'Редактировать' для курса.");
+                    return;
+                }
+                if (confirm('Вы уверены, что хотите удалить этот элемент?')) {
+                    section.elements.splice(index, 1);
+                }
+            };
+
+            $scope.scrollToTop = function () {
+                $timeout(function () {
+                    var mainContent = document.querySelector('.main-content');
+                    if (mainContent) {
+                        mainContent.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                }, 0);
+            };
+
+            $scope.startEditing = function (course) {
+                course._originalSections = angular.copy(course.sections);
+                course.isEditing = true;
+            };
+
+            $scope.saveCourse = function (course) {
+                delete course._originalSections;
+                course.isEditing = false;
+                console.log('Saving course:', course);
+
+                var courseData = angular.copy(course);
+                delete courseData.isExpanded;
+                delete courseData.selected;
+                if (courseData.statistics) {
+                    delete courseData.statistics.isExpanded;
+                }
+
+                // Отправка данных на сервер
+                $http.put('http://127.0.0.1:8000/teacher_dashboard_data/course/' + course.id, courseData)
+                    .then(function (response) {
+                        console.log('Курс успешно сохранен на сервере:', response.data);
+
+                        // Обновляем локальные данные, если сервер вернул обновленный курс
+                        if (response.data && response.data.course) {
+                            angular.extend(course, response.data.course);
+                        }
+
+                        // Уведомление пользователя
+                        alert('Курс "' + course.name + '" успешно сохранен!');
+                    }, function (error) {
+                        console.error('Ошибка при сохранении курса:', error);
+
+                        // Восстанавливаем режим редактирования в случае ошибки
+                        course.isEditing = true;
+
+                        // Уведомление об ошибке
+                        alert('Не удалось сохранить курс. Пожалуйста, попробуйте снова. Ошибка: ' + (error.data?.message || error.statusText));
+                    });
+            };
+
+            $scope.cancelEditing = function (course) {
+                if (course._originalSections) {
+                    course.sections = angular.copy(course._originalSections);
+                    delete course._originalSections;
+                }
+                course.isEditing = false;
+                console.log('Editing canceled for course:', course);
+            };
+
+            $scope.changeQuestionType = function (question) {
+                var questionText = question.text;
+                delete question.options;
+                delete question.correctOption;
+                delete question.answer;
+                switch (question.type) {
+                    case 'single':
+                        question.options = [
+                            { text: '', isCorrect: false },
+                            { text: '', isCorrect: false }
+                        ];
+                        question.correctOption = 0;
+                        break;
+                    case 'multiple':
+                        question.options = [
+                            { text: '', isCorrect: false },
+                            { text: '', isCorrect: false }
+                        ];
+                        break;
+                }
+                question.text = questionText;
+            };
+        });
+    </script>
+</body>
+
+</html>

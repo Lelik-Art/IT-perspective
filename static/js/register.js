@@ -103,12 +103,15 @@ form.addEventListener('submit', async (e) => {
 
     try {
         const endpoint = selectedRole === 'student' 
-            ? '/api/register/student' 
-            : '/api/register/teacher';
+            ? '/register'
+            : '/register';
 
         const response = await fetch(endpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                        'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value,
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
             body: JSON.stringify(formData)
         });
 

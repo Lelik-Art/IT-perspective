@@ -98,6 +98,9 @@ def register_view(request):
         messages.success(request, 'Письмо отправлено на почту')
     return render(request, 'register.html')
 
+def admin_panel(request):
+    return render(request, 'adminpanel.html')
+
 def user_login(request):
     if request.method == "POST":
         email = request.POST.get('email')
