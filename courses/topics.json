@@ -1,25 +1,21 @@
 [
   {
     "course_id": 0,
-    "description": "Описание",
     "topics": [
       {
         "topic_id": 1,
         "title": "Тест",
-        "order": 1,
         "test_id": 1,
         "lessons": [
           {
             "lesson_id": 1,
             "title": "Тест",
             "text": "Тест",
-            "order": 1
           },
           {
             "lesson_id": 2,
             "title": "Тест",
             "text": "Тест",
-            "order": 2
           }
         ],
         "images": [],
