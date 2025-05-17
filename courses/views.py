@@ -415,7 +415,7 @@ def course_view(request):
         course = Course.objects.select_related('teacher').get(course_id=course_id)
     except Course.DoesNotExist:
         messages.error(request, "Курс не найден")
-        return redirect('course_view')
+        return redirect('my_courses')
 
     json_path = os.path.join(os.path.dirname(__file__), 'topics.json')
     try:
@@ -423,13 +423,13 @@ def course_view(request):
             topics_data = json.load(file)
     except Exception as e:
         messages.error(request, f"Ошибка загрузки данных: {str(e)}")
-        return redirect('course_view')
+        return redirect('my_courses')
 
     course_topics = next((entry for entry in topics_data if entry['course_id'] == int(course_id)), None)
 
     if not course_topics:
         messages.error(request, f"Не найден курс с данным ID")
-        return redirect('course_view')
+        return redirect('my_courses')
 
     context = {
         'course': {
