@@ -15,12 +15,6 @@ from .utils import generate_code, send_confirmation_email, send_restore_password
 import re
 
 
-@login_required(login_url='login')
-def home_view(request):
-    print("user:", request.user)
-    print("is_authenticated:", request.user.is_authenticated)
-    return render(request, 'home.html', {'user': request.user})
-
 def restore_password_view(request):
     code = request.GET.get('code')
     if not code:
@@ -82,15 +76,19 @@ def register_view(request):
 
         if not email or not name or not password or not role:
             messages.error(request, 'Вы не заполнили одно из полей')
+            return redirect("register")
             # return JsonResponse({'error': 'Вы не заполнили одно из полей'}, status=400)
         if User.objects.filter(email=email).exists():
             messages.error(request, 'Email уже используется')
+            return redirect("register")
             # return JsonResponse({'error': 'Email уже используется'}, status=400)
         if(not validate_email(email)):
             messages.error(request, 'Вы ввели не электронную почту')
+            return redirect("register")
         	# return JsonResponse({'error': 'Вы ввели не электронную почту'}, status=400)
         if(not validate_password(password)):
             messages.error(request, 'Пароль должен состоять из не менее 8 символов и не более 64')
+            return redirect("register")
         	# return JsonResponse({'error': 'Пароль должен состоять из не менее 8 символов и не более 64'}, status=400)
         code = generate_code()
         user = User.objects.create_user(email=email, password=password, name=name, role=role, code=code)
@@ -116,8 +114,10 @@ def user_login(request):
                     return redirect("home")
                 else:
                     messages.error(request, "Данный аккаунт не подтверждён.")
+                    return redirect("login")
             else:
                 messages.error(request, "Неверное имя пользователя или пароль.")
+                return redirect("login")
         except User.DoesNotExist:
             messages.error(request, "Неверное имя пользователя или пароль.")
     return render(request, "login.html")

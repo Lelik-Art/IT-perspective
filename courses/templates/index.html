@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Образовательная платформа</title>
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+    <!-- Навигационная панель -->
+    <nav class="navbar">
+        <div class="burger-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Главная</a></li>
+            <li><a href="registr_add.html" class="nav-link">Новости</a></li>
+            <li><a href="#" class="nav-link">Курсы</a></li>
+        </ul>
+
+        <ul class="auth-links">
+            <li><a href="registration.html" class="auth-link">Регистрация</a></li>
+            <li><a href="login.html" class="auth-link">Авторизация</a></li>
+        </ul>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const burger = document.querySelector('.burger-menu');
+            const nav = document.querySelector('.navbar');
+            
+            burger.addEventListener('click', function() {
+                nav.classList.toggle('active');
+                document.body.classList.toggle('menu-open');
+            });
+
+            // Закрытие меню при клике вне области
+            document.addEventListener('click', function(event) {
+                if (!nav.contains(event.target) && !burger.contains(event.target)) {
+                    nav.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                }
+            });
+
+            // Закрытие меню при ресайзе окна
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    nav.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

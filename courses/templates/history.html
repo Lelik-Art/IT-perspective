@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru" ng-app="championshipHistoryApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>История кейс-чемпионата 2024</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/history.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+
+<body ng-controller="HistoryController as histCtrl">
+    <div class="page-container">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="white">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h1>История кейс-чемпионата 2024</h1>
+            </header>
+
+            <div class="text-block">
+                <p>
+                    Какая-то суть задачи, описание сколько заявлено участников, сколько дошло до конца. Названы
+                    победители Какая-то суть задачи, описание сколько заявлено участников, сколько дошло до конца.
+                    Названы победители Какая-то суть задачи, описание сколько заявлено участников, сколько дошло до
+                    конца. Названы победители Какая-то суть задачи, описание сколько заявлено участников, сколько дошло
+                    до конца. Названы победители Какая-то суть задачи, описание сколько заявлено участников, сколько
+                    дошло до конца. Названы победители Какая-то суть задачи, описание сколько заявлено участников,
+                    сколько дошло до конца. Названы победители Какая-то суть задачи, описание сколько заявлено
+                    участников, сколько дошло до конца. Названы победители Какая-то суть задачи, описание сколько
+                    заявлено участников, сколько дошло до конца. Названы победители Какая-то суть задачи, описание
+                    сколько заявлено участников, сколько дошло до конца. Названы победители Какая-то суть задачи,
+                    описание сколько заявлено участников, сколько дошло до конца. Названы победители Какая-то суть
+                    задачи, описание сколько заявлено участников, сколько дошло до конца. Названы победители
+                </p>
+            </div>
+
+            <div class="image-grid">
+                <img src="https://picsum.photos/seed/building1/400/250" alt="Building 1">
+                <img src="https://picsum.photos/seed/building1/400/250" alt="Building 2">
+                <img src="https://picsum.photos/seed/building1/400/250" alt="Building 3">
+                <img src="https://picsum.photos/seed/building1/400/250" alt="Building 4">
+                <img src="https://picsum.photos/seed/building1/400/250" alt="Building 5">
+                <img src="https://picsum.photos/seed/building1/400/250" alt="Building 6">
+            </div>
+        </main>
+    </div>
+
+    <footer class="page-footer">
+        ©2025 Команда разработки
+    </footer>
+
+    <script>
+        var app = angular.module('championshipHistoryApp', []);
+
+        app.controller('HistoryController', function ($scope) {
+            var vm = this;
+        });
+    </script>
+</body>
+
+</html>

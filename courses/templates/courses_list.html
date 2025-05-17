@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Опубликованные курсы</title>
+</head>
+<body>
+    <h1>Опубликованные курсы</h1>
+    <ul>
+        {% for course in courses %}
+            <li>
+                <strong>{{ course.title }}</strong><br>
+                {{ course.description|default:"Описание отсутствует" }}<br>
+                <form method="post" action="{% url 'enroll_to_course' %}"> 
+				{% csrf_token %}
+				<input type="hidden" name="course_id" value="{{ course.course_id }}"> 
+				<button type="submit">Записаться</button> 
+				</form>
+            </li>
+        {% empty %}
+            <li>Нет опубликованных курсов</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'my_courses' %}">Перейти в мои курсы</a>
+</body>
+</html>

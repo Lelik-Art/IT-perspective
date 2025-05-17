@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f0f2f5;
+    color: #333;
+  }
+  /* Боковая панель */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 100%;
+    background: #0052cc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sidebar a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+  }
+  /* Основной контент */
+  .content {
+    margin-left: 60px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header {
+    padding: 20px;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 32px;
+  }
+  /* Сетка карточек */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 0 20px 20px;
+    flex-grow: 1;
+  }
+  .member {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    align-items: flex-start;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .member img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+  }
+  .member .info {
+    flex: 1;
+  }
+  .member .info h2 {
+    margin: 0 0 5px;
+    font-size: 18px;
+  }
+  .member .info p {
+    margin: 2px 0;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .member .info .email {
+    margin-top: 8px;
+    color: #555;
+  }
+  /* Футер */
+  footer {
+    background: #0052cc;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+  }

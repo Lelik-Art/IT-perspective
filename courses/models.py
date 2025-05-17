@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 class Tag(models.Model):
     tag_id = models.AutoField(primary_key=True)
@@ -36,6 +37,8 @@ class Progress(models.Model):
     topic_id = models.IntegerField(null=True)
     test_id = models.IntegerField(null=True)
     score = models.IntegerField(default=0)
+    success = models.IntegerField(default=False)
+    date = models.DateField(default=timezone.now)
 
     class Meta:
         unique_together = ('student', 'course', 'topic_id', 'test_id')

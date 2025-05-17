@@ -27,6 +27,7 @@ class User(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_confirmed = models.BooleanField(default=False)
     avatar = models.CharField(default="avatars/default.png")
+    about = models.CharField(blank=True, null=True)
 
     objects = UserManager()
 

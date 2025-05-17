@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/main_str.css">
+    <link href="{% static 'courses/css/main_str.css' %}" rel="stylesheet">
+    <title>Образовательная платформа</title>
+</head>
+<body>
+    <!-- Header Image -->
+    <div class="header-image"></div>
+
+    <!-- Кнопка входа -->
+    <a class="login-btn" href="{% url 'courses' %}" >Вход</a>
+
+    <!-- Боковое меню -->
+    <nav class="sidebar" style="position: absolute;">
+        <div class="menu-header">История чемпионатов</div>
+        
+        <div class="menu-section">
+            <h2>Годы проведения</h2>
+            <ul>
+                <li><button type="submit" class="btn-primary" onclick="location.href=''">2022</button></li>
+                <li><button type="submit" class="btn-primary" onclick="location.href=''">2023</button></li>
+                <li><button type="submit" class="btn-primary" onclick="location.href='history.html'">2024</button></li>
+                <li><button type="submit" class="btn-primary" onclick="location.href=''">2025</button></li>
+            </ul>
+        </div>
+
+        <div class="menu-section">
+            <h2>Онлайн школа подготовки к чемпионату</h2>
+            <ul>
+                <li>Курс руководителей команд</li>
+                <li ><a class="btn-primary" href="{% url 'my_courses' %}" >Курс участника команд</a>  </li>
+                <li>Курс по выбору кейса</li>
+                <li>Курс по работе в Teamstorm</li>
+            </ul>
+        </div>
+        <div class="menu-section">
+            <h2><button type="submit" class="btn-primary" onclick="location.href='organizator2.html'">Организаторы</button></h2>
+        </div>
+        <div class="menu-section">
+            <h2><a type="submit" class="btn-primary" href="{% url 'yslov_ych' %}">Условия участия</a></h2>
+        </div>
+        <div class="menu-section">
+            <h2><button type="submit" class="btn-primary" onclick="location.href=''">Команда проекта</button></h2>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <main class="main-content">
+        <header class="section-header">
+            <h1 class="section-title">Доступные курсы</h1>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Поиск курсов...">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="#666">
+                    <path d="M10 2a8 8 0 0 1 6.32 12.906l5.387 5.387a1 1 0 0 1-1.414 1.414l-5.387-5.387A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/>
+                </svg>
+            </div>
+        </header>
+        
+        <div class="courses-grid">
+            <!-- Курс 1 -->
+            <article class="course-card">
+                <img src="{% static 'courses/img/главстр.png' %}" alt="Course Image">
+                <div class="course-content">
+                    <h2 class="course-title">Подготовка к финалу ВСОШ по математике</h2>
+                   <br>
+                   <br>
+                    <p class="course-description">
+                        Познакомитесь с разработкой системы анализа математических задач повышенной сложности. 
+                        Изучим современные подходы к решению олимпиадных заданий международного уровня.
+                    </p>
+                </div>
+                <div class="course-actions">
+                    <button class="btn-primary">Записаться</button>
+                    <button class="btn-secondary">Узнать больше</button>
+                </div>
+                <div class="course-footer">
+                    <img src="{% static 'courses/img/рост.png' %}" alt="Logo">
+                    <span>Ростелеком</span>
+                </div>
+            </article>
+
+            <!-- Курс 2 -->
+            <article class="course-card">
+                <img src="{% static 'courses/img/главстр.png' %}" alt="Course Image">
+                <div class="course-content">
+                    <h2 class="course-title">Продвинутая математика</h2>
+                   <br>
+                   <br>
+                    <p class="course-description">
+                        Углублённый курс по решению нестандартных задач. Особое внимание 
+                        уделяется методам доказательств и логическому мышлению.
+                    </p>
+                </div>
+                <div class="course-actions">
+                    <button class="btn-primary">Записаться</button>
+                    <button class="btn-secondary">Подробнее</button>
+                </div>
+                <div class="course-footer">
+                    <img src="{% static 'courses/img/рост.png' %}" alt="Logo">
+                    <span>Ростелеком</span>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.querySelector('.search-input');
+            const courseCards = document.querySelectorAll('.course-card');
+
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+
+                courseCards.forEach(card => {
+                    const title = card.querySelector('.course-title').textContent.toLowerCase();
+                    const description = card.querySelector('.course-description').textContent.toLowerCase();
+
+                    if (searchTerm === '' || title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

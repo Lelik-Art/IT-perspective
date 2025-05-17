@@ -1,12 +1,12 @@
+[
 {
   "test_id": 0, 
   "title": "Название",
-  "description": "Описание",
   "questions": [
     {
       "question_id": 1,
       "text": "Тестовый вопрос",
-      "type": "single_choice",
+      "type": "single",
       "options": [
         {"id": 1, "text": "Ответ 1", "is_correct": false},
         {"id": 2, "text": "Ответ 2", "is_correct": true},
@@ -16,10 +16,9 @@
     }
   ],
   "settings": {
-    "shuffle_questions": true,
-    "shuffle_answers": true,
-    "attempts_allowed": 1,
-	"passing_score": 1,
-	"time_limit": 100
+      "attempts_allowed": 1,
+	  "passing_score": 1,
+	  "time_limit": 100
   }
 }
+]

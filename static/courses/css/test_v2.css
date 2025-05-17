@@ -1,0 +1,196 @@
+:root {
+    --instructions-width: 391px;
+    --blue: #4055E8;
+    --green: #4CAF4F;
+    --white: #FFFFFF;
+    --black: #000000;
+    --gap: 16px;
+    --font: 'Inter', sans-serif;
+  }
+  
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  html, body {
+    height: 100%;
+    font-family: var(--font);
+  }
+  
+  /* контейнер для двух панелей */
+  .container {
+    display: flex;
+    height: 100%;
+  }
+  
+  /* === левая панель === */
+  .instructions {
+    position: relative;
+    width: var(--instructions-width);
+    background: var(--blue);
+    padding: var(--gap) 14px 80px;
+    color: var(--white);
+    overflow-y: auto;
+  }
+  
+  .steps {
+    list-style: none;
+  }
+  .step {
+    margin-bottom: 32px;
+  }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .bullet {
+    width: 32px; height: 32px;
+    background: #FDB840;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--black);
+    font-size: 16px;
+  }
+  .step-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+  
+  .items {
+    list-style: none;
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .lesson a {
+    color: var(--white);
+    text-decoration: underline;
+    font-size: 15px;
+    line-height: 20px;
+  }
+  .test {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    line-height: 20px;
+  }
+  .test svg {
+    width: 16px; height: 16px;
+    color: var(--white);
+  }
+  .test.completed svg {
+    color: var(--green);
+  }
+  
+  /* плашка процента */
+  .progress-pill {
+    position: absolute;
+    bottom: 20px;
+    left: 14px;
+    padding: 10px 16px;
+    background: var(--green);
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--black);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .pill-percent {
+    font-size: 16px;
+    display: flex;
+  }
+  .percent-sign {
+    font-size: 12px;
+    margin-left: 2px;
+  }
+  
+  /* === правая панель === */
+  .content {
+    flex: 1;
+    padding: 40px;
+    background: var(--white);
+    overflow-y: auto;
+  }
+  
+  /* шапка теста */
+  .test-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .icon-test {
+    width: 24px; height: 24px;
+    color: var(--black);
+  }
+  .test-header h2 {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--black);
+    line-height: 28px;
+  }
+  
+  /* уведомление */
+  .test-notice {
+    margin-bottom: 24px;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--black);
+  }
+  
+  /* детали теста */
+  .test-details {
+    border: 2px solid var(--blue);
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 320px;
+    margin-bottom: 32px;
+  }
+  .detail {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .detail:last-child {
+    margin-bottom: 0;
+  }
+  .label {
+    font-weight: 500;
+    color: var(--black);
+  }
+  .value {
+    display: inline-block;
+    padding: 2px 6px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  
+  /* кнопка начать */
+  .start-test {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--blue);
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  .start-test svg {
+    width: 20px; height: 20px;
+    color: var(--white);
+  }
+  

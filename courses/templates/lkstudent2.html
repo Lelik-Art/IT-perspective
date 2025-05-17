@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель курсов</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #e8edf3;
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 60px;
+            background-color: #2979ff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 20px;
+        }
+
+        .sidebar .icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .main {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            gap: 40px;
+        }
+
+        .user-info {
+            width: 200px;
+        }
+
+        .user-info h2 {
+            font-size: 32px;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .courses-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 150px;
+        }
+
+        section h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .my-courses h2 {
+            text-align: left;
+        }
+
+        .available-courses {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .available-courses h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 8px;
+            width: 550px;
+            padding: 8px;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding-bottom: 30px;
+            min-height: 160px;
+        }
+
+        .course-content {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .course-img {
+            width: 280px;
+            height: 120px;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .course-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex: 1;
+        }
+
+        .course-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .course-title {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .course-subtitle {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .btn {
+            background-color: #2979ff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn:hover {
+            background-color: #1a5dd0;
+        }
+
+        /* Новые стили для контейнера кнопок */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 15px;
+            align-items: flex-end;
+        }
+
+        .my-courses .button-container {
+            position: static;
+            margin-top: 10px;
+            padding-right: 8px;
+        }
+
+        .available-courses .button-container {
+            position: absolute;
+            bottom: 35px;
+            right: 8px;
+            flex-direction: column-reverse;
+            gap: 8px;
+        }
+
+        .action-btn.my-courses-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .action-btn.my-courses-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 10px;
+            color: #fff;
+            background: #1F69FF;
+            padding: 4px 8px;
+            border-radius: 0 0 8px 8px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 22px;
+        }
+
+        .course-footer .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .course-footer .footer-photo {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            object-fit: cover; /* Для корректного отображения */
+        }
+
+        .course-footer span {
+            color: #fff;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+            width: 300px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .search-bar .icons span {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        gap: 10px;
+        width: 270px;
+        height: 24px;
+        background-color: #E8F5E9; /* Мягкий светло-зелёный */
+        border: 1px solid #BDBDBD; /* Серая граница вместо чёрной */
+        border-radius: 60px;
+        flex: none;
+        order: 1;
+        flex-grow: 0;
+        z-index: 1;
+        align-self: flex-end;
+        margin-top: 5px;
+        }
+
+        .progress-bar .progress {
+        background-color: #81C784; /* Приятный мягкий зелёный */
+        height: 100%;
+        border-radius: 60px 0 0 60px;
+        width: 30%;
+        }
+
+        .progress-bar .label {
+        font-size: 12px;
+        color: #202224; /* Тёмно-серый вместо чёрного */
+        margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="icon">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/home.png" alt="Home">
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="user-info">
+            <h1>Имя<br>Фамилия</h1>
+        </div>
+
+        <div class="courses-container">
+            <section class="my-courses">
+                <h2>Мои курсы</h2>
+                <div class="courses-grid">
+                    <!-- Карточка 1 -->
+                    <div class="course-card">
+                        <div class="course-content">
+                            <div class="course-img">Картинка курса</div>
+                            <div class="course-details">
+                                <div class="course-info">
+                                    <div class="course-title">Название курса</div>
+                                    <div class="course-subtitle">Расписание курса</div>
+                                    
+                                    <div class="button-container">
+                                        <button class="btn">Перейти к материалам курса</button>
+                                        <br>
+                                        <button class="action-btn my-courses-btn">Покинуть курс</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-footer">
+                            <div class="footer-left">
+                                <img src="{% static 'courses/img/рост2.png' %}" class="footer-photo" alt="Логотип Ростелеком">
+                                <span>Ростелеком</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Карточка 2 -->
+                    <div class="course-card">
+                        <div class="course-content">
+                            <div class="course-img">Картинка курса</div>
+                            <div class="course-details">
+                                <div class="course-info">
+                                    <div class="course-title">Название курса</div>
+                                    <div class="course-subtitle">Расписание курса</div>
+                                    
+                                    <div class="button-container">
+                                        <button class="btn">Перейти к материалам курса</button>
+                                        <br>
+                                        <button class="action-btn my-courses-btn">Покинуть курс</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-footer">
+                            <div class="footer-left">
+                                <img src="{% static 'courses/img/рост2.png' %}" class="footer-photo" alt="Логотип Ростелеком">
+                                <span>Ростелеком</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="available-courses">
+                <h2>Доступные курсы</h2>
+                <div class="search-bar">
+                    <input type="text" placeholder="Поиск курсов">
+                    <div class="icons">
+                        <span>✅</span>
+                        <span>🗑️</span>
+                    </div>
+                </div>
+
+                <div class="courses-grid">
+                    <!-- Карточка 1 -->
+                    <div class="course-card available">
+                        <div class="course-content">
+                            <div class="course-img">Картинка курса</div>
+                            <div class="course-details">
+                                <div class="course-info">
+                                    <div class="course-title">Название курса</div>
+                                    <div class="course-subtitle">Расписание курса</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-container">
+                            <button class="btn">Информация о курсе</button>
+                            <button class="btn">Записаться на курс</button>
+                        </div>
+                        <div class="course-footer">
+                            <div class="footer-left">
+                              
+                                <img src="{% static 'courses/img/рост2.png' %}" class="footer-photo" alt="Логотип Ростелеком">
+                                <span>Ростелеком</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Остальные карточки аналогично -->
+                    <div class="course-card available">
+                        <div class="course-content">
+                            <div class="course-img">Картинка курса</div>
+                            <div class="course-details">
+                                <div class="course-info">
+                                    <div class="course-title">Название курса</div>
+                                    <div class="course-subtitle">Расписание курса</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-container">
+                            <button class="btn">Информация о курсе</button>
+                            <button class="btn">Записаться на курс</button>
+                        </div>
+                        <div class="course-footer">
+                            <div class="footer-left">
+                                <img src="{% static 'courses/img/рост2.png' %}" class="footer-photo" alt="Логотип Ростелеком">
+                                <span>Ростелеком</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
