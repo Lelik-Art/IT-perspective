@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Course, Progress
 from authorization.models import User
-
+from django.http import HttpResponseBadRequest
 
 def get_published_courses(request):
     courses = Course.objects.filter(status='published').select_related('teacher')
@@ -404,3 +404,45 @@ def course_enroll(request):
 #         'materials': materials,
 #         'videos': videos,
 #     })
+
+@login_required
+def course_view(request):
+    course_id = request.GET.get('course_id')
+    if not course_id:
+        return HttpResponseBadRequest("Не передан course_id")
+
+    try:
+        course = Course.objects.select_related('teacher').get(course_id=course_id)
+    except Course.DoesNotExist:
+        messages.error(request, "Курс не найден")
+        return redirect('course_view')
+
+    json_path = os.path.join(os.path.dirname(__file__), 'topics.json')
+    try:
+        with open(json_path, 'r', encoding='utf-8') as file:
+            topics_data = json.load(file)
+    except Exception as e:
+        messages.error(request, f"Ошибка загрузки данных: {str(e)}")
+        return redirect('course_view')
+
+    course_topics = next((entry for entry in topics_data if entry['course_id'] == int(course_id)), None)
+
+    if not course_topics:
+        messages.error(request, f"Не найден курс с данным ID")
+        return redirect('course_view')
+
+    context = {
+        'course': {
+            'id': course.course_id,
+            'title': course.title,
+            'teacher': course.teacher.name,
+            'cover': course.cover_image.url if course.cover_image else None,
+            'status': course.get_status_display(),
+        },
+        'topics': course_topics.get('topics', []),
+        'progress': Progress.objects.filter(
+            student=request.user,
+            course=course
+        ).first()
+    }
+    return render(request, 'course_view.html', context)
