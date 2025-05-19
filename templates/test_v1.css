@@ -1,0 +1,247 @@
+:root {
+    --instructions-width: 391px;
+    --blue: #4055E8;
+    --green: #4CAF4F;
+    --bg-light: #FFFFFF;
+    --text-white: #FFFFFF;
+    --text-black: #000000;
+    --gap: 16px;
+    --font: 'Inter', sans-serif;
+  }
+  
+  /* Сброс */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html, body {
+    height: 100%;
+  }
+  
+  /* Контейнер двух колонок */
+  .container {
+    display: flex;
+    height: 100%;
+    font-family: var(--font);
+  }
+  
+  /* === Левая панель === */
+  .instructions {
+    position: relative;
+    width: var(--instructions-width);
+    background: var(--blue);
+    padding: var(--gap) 14px 100px;
+    overflow-y: auto;
+    color: var(--text-white);
+  }
+  .instructions::-webkit-scrollbar {
+    width: 7px;
+  }
+  .instructions::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .instructions::-webkit-scrollbar-thumb {
+    background: #D9D9D9;
+    border: 1px solid rgba(0,0,0,0.4);
+    border-radius: 50px;
+  }
+  
+  .steps {
+    list-style: none;
+  }
+  .step {
+    margin-bottom: 32px;
+  }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .bullet {
+    width: 32px;
+    height: 32px;
+    background: #FDB840;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--text-black);
+  }
+  .step-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+  
+  .items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-left: 40px;
+  }
+  .lesson a {
+    color: var(--text-white);
+    text-decoration: underline;
+    font-size: 15px;
+    line-height: 20px;
+  }
+  .test {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    line-height: 20px;
+    color: var(--text-white);
+  }
+  .test svg {
+    width: 16px;
+    height: 16px;
+  }
+  .test.completed svg {
+    color: var(--green);
+  }
+  
+  /* Плашка прогресса */
+  .progress-pill {
+    position: absolute;
+    bottom: 20px;
+    left: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--green);
+    border-radius: 50px;
+    color: var(--text-black);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .pill-label {
+    flex-shrink: 0;
+  }
+  .pill-percent {
+    display: flex;
+    align-items: baseline;
+    font-size: 16px;
+  }
+  .percent-sign {
+    font-size: 12px;
+    margin-left: 2px;
+  }
+  
+  /* === Правая панель === */
+  .content {
+    flex: 1;
+    position: relative;
+    overflow-y: auto;
+    background: var(--bg-light);
+    padding: var(--gap);
+  }
+  
+  /* Заголовок урока */
+  .content-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: var(--gap);
+  }
+  .icon-window {
+    width: 24px;
+    height: 24px;
+  }
+  .lesson-title {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    color: var(--text-black);
+  }
+  
+  /* Текст урока */
+  .lesson-body p {
+    margin-bottom: 16px;
+    line-height: 1.5;
+    font-size: 16px;
+    color: var(--text-black);
+  }
+  
+  /* Ресурсы */
+  .resources {
+    display: flex;
+    gap: 40px;
+    margin-bottom: var(--gap);
+  }
+  .resource {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-black);
+    text-decoration: none;
+  }
+  .resource svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* Видео */
+  .video-container {
+    width: 694px;
+    height: 379px;
+    margin-bottom: var(--gap);
+  }
+  .video-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  /* Кнопка «Следующая страница» */
+  .next-page {
+    position: absolute;
+    bottom: var(--gap);
+    right: var(--gap);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    background: #A0AAF3;
+    border-radius: 20px;
+    text-decoration: none;
+    color: var(--text-black);
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .next-page svg {
+    width: 24px;
+    height: 24px;
+  }
+   .test {
+        cursor: pointer;
+        transition: background-color 0.2s;
+        padding: 8px;
+        border-radius: 6px;
+    }
+
+    .test:hover {
+        background-color: #f5f5f5;
+    }
+
+    .test svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+        vertical-align: middle;
+    }
+
+    .test.completed svg path {
+        stroke: #0ACB5B; /* Зеленый цвет для выполненных */
+    }
+
+    .test:not(.completed) svg circle {
+        stroke: #666; /* Серый цвет для невыполненных */
+    }

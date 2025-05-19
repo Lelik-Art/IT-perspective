@@ -1,0 +1,431 @@
+:root {
+    --instructions-width: 391px;
+    --blue: #4055E8;
+    --green: #4CAF4F;
+    --white: #FFFFFF;
+    --black: #000000;
+    --light-gray: #F7F8FA;
+    --border-gray: #E0E0E0;
+    --highlight-bg: #CBE4FF;
+    --highlight-border: #7FBFFF;
+    --gap: 16px;
+    --font: 'Inter', sans-serif;
+  }
+  
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  html, body {
+    height: 100%;
+    font-family: var(--font);
+  }
+  
+  /* === Общий контейнер === */
+  .container {
+    display: flex;
+    height: 100%;
+  }
+  
+  /* === Левая панель === */
+  .instructions {
+    position: relative;
+    width: var(--instructions-width);
+    background: var(--blue);
+    padding: var(--gap) 14px 80px;
+    color: var(--white);
+    overflow-y: auto;
+  }
+  .steps {
+    list-style: none;
+  }
+  .step {
+    margin-bottom: 32px;
+  }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .bullet {
+    width: 32px; height: 32px;
+    background: #FDB840;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--black);
+  }
+  .step-title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+  .items {
+    list-style: none;
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .lesson a {
+    color: var(--white);
+    text-decoration: underline;
+    font-size: 15px;
+    line-height: 20px;
+  }
+  .test {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    line-height: 20px;
+  }
+  .test svg {
+    width: 16px; height: 16px;
+    color: var(--white);
+  }
+  .test.completed svg {
+    color: var(--green);
+  }
+  /* Плашка процента */
+  .progress-pill {
+    position: absolute;
+    bottom: 20px;
+    left: 14px;
+    padding: 10px 16px;
+    background: var(--green);
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--black);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .pill-percent {
+    font-size: 16px;
+    display: flex;
+    align-items: baseline;
+  }
+  .percent-sign {
+    font-size: 12px;
+    margin-left: 2px;
+  }
+  
+  /* === Правая панель === */
+  .content {
+    flex: 1;
+    position: relative;
+    padding: 40px;
+    background: var(--white);
+    overflow-y: auto;
+  }
+  .test-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .icon-test {
+    width: 24px; height: 24px;
+    color: var(--black);
+  }
+  .test-header h2 {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--black);
+    line-height: 28px;
+  }
+  
+  /* Форма теста: две колонки */
+  .test-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 80px;
+    margin-bottom: 24px;
+  }
+  .question {
+    border: none;
+  }
+  .question legend {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--black);
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .options input[type="radio"] {
+    display: none;
+  }
+  .options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border-gray);
+    background: var(--light-gray);
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 20px;
+    color: var(--black);
+  }
+  /* radio-circle */
+  .options label:before {
+    content: "";
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--border-gray);
+    border-radius: 50%;
+    background: var(--white);
+  }
+  /* выделение выбранного варианта */
+  .options input[type="radio"]:checked + label {
+    background: var(--highlight-bg);
+    border-color: var(--highlight-border);
+  }
+  .options input[type="radio"]:checked + label:before {
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+  
+  /* Таймер */
+  .timer {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    padding: 4px 12px;
+    background: #E0E7FF;
+    border: 1px solid var(--highlight-border);
+    border-radius: 20px;
+    font-size: 14px;
+    color: var(--black);
+  }
+  
+  /* Следующая страница */
+  .next-page {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    background: #A0AAF3;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--black);
+    border: none;
+    cursor: pointer;
+  }
+  .next-page svg {
+    width: 24px;
+    height: 24px;
+  }
+  .prev-page {
+    position: relative;
+    bottom: 40px;
+    right: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    background: #A0AAF3;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--black);
+    border: none;
+    cursor: pointer;
+    top: -90px;
+    margin-bottom: -10px;
+  }
+  .prev-page svg {
+    width: 24px;
+    height: 24px;
+  }
+  .end-page {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    background: #FDB840;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--black);
+    border: none;
+    cursor: pointer;
+  }
+  .end-page svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .end-page, .prev-page {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    margin: 20px 10px;
+    background: #0ACB5B;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+    transition: background 0.3s;
+  }
+
+  .prev-page {
+    background: #f0f2f5;
+    color: #333;
+    border: 1px solid #ddd;
+  }
+
+  .end-page:hover {
+    background: #08b84f;
+  }
+
+  .end-page svg, .prev-page svg {
+    width: 20px;
+    height: 20px;
+    margin-left: 8px;
+  }
+  /* Мультивыборные опции (checkbox) */
+.options-multi {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  /* Скрываем дефолтный чекбокс */
+  .options-multi input[type="checkbox"] {
+    display: none;
+  }
+  
+  /* Стили для лейбла-опции */
+  .options-multi label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    background: #F7F8FA;
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 20px;
+    color: #000000;
+    position: relative;
+  }
+  
+  /* Псевдо-чекбокс */
+  .options-multi label::before {
+    content: "";
+    flex-shrink: 0;
+    width: 16px; height: 16px;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+    background: #FFFFFF;
+  }
+  
+  /* Состояние «отмечено» */
+  .options-multi input[type="checkbox"]:checked + label {
+    background: #CBE4FF;
+    border-color: #7FBFFF;
+  }
+  .options-multi input[type="checkbox"]:checked + label::before {
+    background: #0052CC;
+    border-color: #0052CC;
+    /* галочка */
+    mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><path fill="white" d="M5 13l4 4l10-10"/></svg>') center/contain no-repeat;
+  }
+ 
+  .test {
+        cursor: pointer;
+        transition: background-color 0.2s;
+        padding: 8px;
+        border-radius: 6px;
+    }
+
+    .test:hover {
+        background-color: #f5f5f5;
+    }
+
+    .test svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+        vertical-align: middle;
+    }
+
+    .test.completed svg path {
+        stroke: #0ACB5B; /* Зеленый цвет для выполненных */
+    }
+
+    .test:not(.completed) svg circle {
+        stroke: #666; /* Серый цвет для невыполненных */
+    }
+  .next-page,
+  .prev-page {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 16px;
+    gap: 8px;
+    transition: all 0.3s;
+    border: 1px solid transparent;
+  }
+
+/* Стили для кнопки "Следующая" */
+  .next-page {
+    background: #0ACB5B;
+    color: white;
+    order: 2; /* Правая позиция */
+  } 
+
+  .next-page:hover {
+    background: #08b84f;
+  }
+
+/* Стили для кнопки "Предыдущая" */
+  .prev-page {
+    background: #f0f2f5;
+    color: #333;
+    border-color: #ddd;
+    order: 1; /* Левая позиция */
+  }
+
+  .prev-page:hover {
+    background: #e4e6e9;
+  }
+
+/* Иконки */
+  .next-page svg,
+  .prev-page svg {
+    width: 20px;
+    height: 20px;
+  }
+
+/* Контейнер для кнопок */
+  .action-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+  }
